@@ -8,25 +8,25 @@ import timeit
 
 class ArrayQueue:
     def __init__(self):
-        # Initialize an empty list to store queue elements
+        # Initializing  empty list  
         self.elements = []
     def enqueue(self, item):
-        # Insert an item at the head (beginning) of the list
+        # Insert item at the head  
         self.elements.insert(0, item)
     def dequeue(self):
-        # Check if the queue is empty before removing an item
+        # Check if the queue is empty 
         if self.is_empty():
             raise IndexError("Dequeue from empty queue")
-        # Remove and return the last item from the list (tail of the queue)
+        # Remove and return the last item 
         return self.elements.pop()
     def is_empty(self):
-        # Return True if the queue is empty, False otherwise
+        # True if empty, False if not
         return len(self.elements) == 0
     def size(self):
-        # Return the number of elements in the queue
+        # Return t number of elements 
         return len(self.elements)
     def peek(self):
-        # Return the element at the tail without removing it
+        # Return the element at the tail 
         if self.is_empty():
             raise IndexError("Peek from empty queue")
         return self.elements[-1]
@@ -42,23 +42,23 @@ class LinkedListQueue:
         self.tail = None
     def enqueue(self, item):
         new_node = ListNode(item)
-        # If the queue is empty, new node becomes both head and tail
+        # If queue is empty, new node is now head and tail
         if self.is_empty():
             self.head = self.tail = new_node
         else:
-            # Otherwise, add the new node at the head
+            # add new node at head
             new_node.next = self.head
             self.head = new_node
     def dequeue(self):
-        # Check if the queue is empty
+        # if queue is empty
         if self.is_empty():
             raise IndexError("empty queue")
-        # If the queue has only one element
+        # if only one element in queue 
         if self.head == self.tail:
             dequeued_value = self.head.value
             self.head = self.tail = None
             return dequeued_value
-        # Otherwise, remove the tail element
+        # remove the element
         current = self.head
         while current.next != self.tail:
             current = current.next
