@@ -2,6 +2,10 @@ import matplotlib.pyplot as plt
 import random
 import timeit
 
+#Ai generation used to help fix syntac of the Queue inorder to better answer the question in reguards to the 
+#requirements. As well as used to help implement enqueue w/ probability 0.7, or a dequeue w/
+#probability 0.3, we my group and I were stuck on how to make it work. 
+
 class ArrayQueue:
     def __init__(self):
         # Initialize an empty list to store queue elements
@@ -97,8 +101,8 @@ linkedListQueueTimes = [timeit.timeit(lambda: testQueuePerformance(LinkedListQue
 # Plot the distributions
 plt.hist(arrayQueueTimes, alpha=0.5, label='ArrayQueue', bins=20)
 plt.hist(linkedListQueueTimes, alpha=0.5, label='LinkedListQueue', bins=20)
-plt.xlabel('Time (seconds)')
+plt.xlabel('Time (s)')
 plt.ylabel('Frequency')
-plt.title('Performance Comparison of Queue Implementations')
+plt.title('Performance Comparison of the twp Queue Implementations')
 plt.legend()
 plt.show()

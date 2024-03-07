@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import random
 import timeit
 
+#Ai generation used to help fix syntac of the Queue inorder to better answer the question in reguards to the 
+#requirements. As well as used to help implement enqueue w/ probability 0.7, or a dequeue w/
+#probability 0.3, we my group and I were stuck on how to make it work. 
 class SimpleStack :
     def __init__(self):
         # Initialize an empty list 
