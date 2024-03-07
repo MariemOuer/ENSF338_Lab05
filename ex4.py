@@ -2,19 +2,19 @@ import matplotlib.pyplot as plt
 import random
 import timeit
 
-#Ai generation used to help fix syntac of the Queue inorder to better answer the question in reguards to the 
+#Ai generation(chatgbt) used to help fix syntax of the Queue inorder to better answer the question in reguards to the 
 #requirements. As well as used to help implement enqueue w/ probability 0.7, or a dequeue w/
-#probability 0.3, we my group and I were stuck on how to make it work. 
+#probability 0.3,  my group and I were stuck on how to make it work. 
 
 class ArrayQueue:
     def __init__(self):
-        # Initializing  empty list  
+        # Initializing empty list  
         self.elements = []
     def enqueue(self, item):
-        # Insert item at the head  
+        # Insert item   
         self.elements.insert(0, item)
     def dequeue(self):
-        # Check if the queue is empty 
+        #  queue is empty 
         if self.is_empty():
             raise IndexError("Dequeue from empty queue")
         # Remove and return the last item 
@@ -23,10 +23,10 @@ class ArrayQueue:
         # True if empty, False if not
         return len(self.elements) == 0
     def size(self):
-        # Return t number of elements 
+        #  number of elements 
         return len(self.elements)
     def peek(self):
-        # Return the element at the tail 
+        # Return the element  
         if self.is_empty():
             raise IndexError("Peek from empty queue")
         return self.elements[-1]
@@ -42,18 +42,17 @@ class LinkedListQueue:
         self.tail = None
     def enqueue(self, item):
         new_node = ListNode(item)
-        # If queue is empty, new node is now head and tail
+        # new node is head and tail
         if self.is_empty():
             self.head = self.tail = new_node
         else:
-            # add new node at head
+            # add new node  
             new_node.next = self.head
             self.head = new_node
     def dequeue(self):
         # if queue is empty
         if self.is_empty():
-            raise IndexError("empty queue")
-        # if only one element in queue 
+            raise IndexError("empty queue") 
         if self.head == self.tail:
             dequeued_value = self.head.value
             self.head = self.tail = None
@@ -83,7 +82,7 @@ class LinkedListQueue:
 def generateRandomTasks(num_tasks=10000):
     return random.choices(['enqueue', 'dequeue'], weights=[0.7, 0.3], k=num_tasks)
 
-# Generate a list of random tasks
+# Random tasks
 taskLists = [generateRandomTasks() for _ in range(100)]
 
 def testQueuePerformance(queueClass, tasks):
@@ -94,11 +93,11 @@ def testQueuePerformance(queueClass, tasks):
         elif task == 'dequeue' and not queue.is_empty():
             queue.dequeue()
 
-# Measure performance for each queue implementation
+# Performance
 arrayQueueTimes = [timeit.timeit(lambda: testQueuePerformance(ArrayQueue, tasks), number=1) for tasks in taskLists]
 linkedListQueueTimes = [timeit.timeit(lambda: testQueuePerformance(LinkedListQueue, tasks), number=1) for tasks in taskLists]
 
-# Plot the distributions
+# Ploting
 plt.hist(arrayQueueTimes, alpha=0.5, label='ArrayQueue', bins=20)
 plt.hist(linkedListQueueTimes, alpha=0.5, label='LinkedListQueue', bins=20)
 plt.xlabel('Time (s)')

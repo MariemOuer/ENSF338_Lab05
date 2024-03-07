@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 import random
 import timeit
 
-#Ai generation used to help fix syntac of the Queue inorder to better answer the question in reguards to the 
+#Ai generation(chatgbt) used to help fix syntax of the Queue inorder to better answer the question in reguards to the 
 #requirements. As well as used to help implement enqueue w/ probability 0.7, or a dequeue w/
-#probability 0.3, we my group and I were stuck on how to make it work. 
+#probability 0.3,  my group and I were stuck on how to make it work. 
 class SimpleStack :
     def __init__(self):
-        # Initialize an empty list 
+        # Initialize list 
         self.elements = []
-        # Add item to end of list 
+        # Add item 
     def push(self, item):
         self.elements.append(item)
     # Check if stack is empty
@@ -21,18 +21,17 @@ class SimpleStack :
     #True if empty, False if not empty 
     def is_empty(self):
         return len(self.elements) == 0
-    # Return top element w/o removing it
+    #Return top element 
     def peek(self):
         if self.is_empty():
             raise IndexError("Peek from empty stack")
         return self.elements[-1]
-    # Return the number of elements in stack
+    #number of elements in stack
     def size(self):
         return len(self.elements)
 
 class LinkedList_Node:
     def __init__(self, value):
-        # Each LinkedList_Node has a value and a pointer to the next LinkedList_Node
         self.value = value
         self.next = None
 
@@ -72,11 +71,11 @@ class LinkedListStack:
             current = current.next
         return count
 
-# Generation of random tasks
+# random tasks
 def generateRandomTasks(num_tasks=10000):
     return random.choices(['push', 'pop'], weights=[0.7, 0.3], k=num_tasks)
 
-# Test stack performance 
+# stack performance 
 def stackPerformance(stack_class, taskLists):
     for tasks in taskLists:
         stack = stack_class()
@@ -89,7 +88,7 @@ def stackPerformance(stack_class, taskLists):
 
 taskLists = [generateRandomTasks() for _ in range(100)]
 
-# Measurement and collecttion of performance information
+# performance 
 runs = 50
 simpleStackTimes = []
 linkedListStackTimes = []
@@ -101,7 +100,7 @@ for _ in range(runs):
     simpleStackTimes.append(simpleStackTime)
     linkedListStackTimes.append(linkedListStackTime)
 
-# Plotting the distributions
+# Plotting 
 plt.hist(simpleStackTimes, alpha=0.5, label='SimpleStack')
 plt.hist(linkedListStackTimes, alpha=0.5, label='LinkedListStack')
 plt.xlabel('Time (s)')
