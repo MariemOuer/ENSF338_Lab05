@@ -1,76 +1,93 @@
-# 2. Implement a stack data structure as discussed in lab and class [0.4 pts]
-class Stack:
+class CustomStack:
     def __init__(self):
-        self.items = []
+        self.items_list = []
 
-    def push(self, item):
-        self.items.append(item)
+    def push_item(self, item):
+        self.items_list.append(item)
 
-    def pop(self):
+    def pop_item(self):
         if not self.is_empty():
-            return self.items.pop()
-        else:
-            raise IndexError("Stack is empty")
-
-    def is_empty(self):
-        return len(self.items) == 0
-
-    def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
+            return self.items_list.pop()
         else:
             return None
 
-# 3. Using the stack, compute the overall result of an expression [0.8 pts]
-def evaluate(expression):
-    stack = Stack()
-    for char in expression:
-        if char.isdigit():
-            stack.push(int(char))
-        elif char in ['+', '-', '*', '/']:
-            if stack.is_empty():
-                raise ValueError("Invalid expression")
-            operand2 = stack.pop()
-            if stack.is_empty():
-                raise ValueError("Invalid expression")
-            operand1 = stack.pop()
-            if char == '+':
-                result = operand1 + operand2
-            elif char == '-':
-                result = operand1 - operand2
-            elif char == '*':
-                result = operand1 * operand2
-            elif char == '/':
-                if operand2 == 0:
-                    raise ValueError("Division by zero")
-                result = operand1 / operand2
-            stack.push(result)
-        elif char == ' ':
-            continue
-        elif char == '(':
-            stack.push(char)
-        elif char == ')':
-            sub_expression = ""
-            while stack.peek() != '(':
-                sub_expression = stack.pop() + sub_expression
-            stack.pop()  # Discard the '('
-            stack.push(evaluate(sub_expression))
+    def peek_item(self):
+        if not self.is_empty():
+            return self.items_list[-1]
         else:
-            raise ValueError("Invalid character in expression")
-    if stack.is_empty() or len(stack.items) > 1:
-        raise ValueError("Invalid expression")
-    return stack.pop()
+            return None
+
+    def is_empty(self):
+        return len(self.items_list) == 0
+
+    def size(self):
+        return len(self.items_list)
 
 
-# 1. Receive a string representing an expression as a command line parameter [0.3 pts]
-import sys
+def evaluate_expression(expression):
+    stack = CustomStack()
+    tokens = tokenize(expression)
+
+    for token in tokens:
+        if token == ')':
+            inner_expression = []
+            while stack.peek_item() != '(':
+                inner_expression.insert(0, stack.pop_item())
+            stack.pop_item()  # Remove '('
+            result = evaluate_inner_expression(inner_expression)
+            stack.push_item(result)
+        else:
+            stack.push_item(token)
+    return int(stack.pop_item())
+
+
+def evaluate_inner_expression(inner_expression):
+    operator = inner_expression.pop(0)
+    result = int(inner_expression.pop(0))
+
+    while inner_expression:
+        operand = int(inner_expression.pop(0))
+        if operator == '+':
+            result += operand
+        elif operator == '-':
+            result -= operand
+        elif operator == '*':
+            result *= operand
+        elif operator == '/':
+            if operand != 0:
+                result /= operand
+            else:
+                raise ValueError("Division by zero")
+    return result
+
+
+def tokenize(expression):
+    tokens = []
+    current_token = ''
+    for char in expression:
+        if char in '()':
+            if current_token:
+                tokens.append(current_token)
+                current_token = ''
+            tokens.append(char)
+        elif char.isspace():
+            if current_token:
+                tokens.append(current_token)
+                current_token = ''
+        else:
+            current_token += char
+    if current_token:
+        tokens.append(current_token)
+    return tokens
+
+
 if __name__ == "__main__":
+    import sys
+
     if len(sys.argv) != 2:
-        print("Usage: python3 calculator.py 'expression'")
-    else:
-        expression = sys.argv[1]
-        try:
-            result = evaluate(expression)
-            print("Result:", result)
-        except Exception as e:
-            print("Error:", e)
+        print("Usage: python ex1.py '<expression>'")
+        sys.exit(1)
+
+    expression = sys.argv[1]
+    result = evaluate_expression(expression)
+    print(result)
