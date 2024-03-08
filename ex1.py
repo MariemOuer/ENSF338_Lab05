@@ -1,4 +1,4 @@
-class CustomStack:
+class Stack:
     def __init__(self):
         self.items_list = []
 
@@ -25,7 +25,7 @@ class CustomStack:
 
 
 def evaluate_expression(expression):
-    stack = CustomStack()
+    stack = Stack()
     tokens = tokenize(expression)
 
     for token in tokens:
@@ -45,6 +45,7 @@ def evaluate_inner_expression(inner_expression):
     operator = inner_expression.pop(0)
     result = int(inner_expression.pop(0))
 
+    # going through the operators and operands
     while inner_expression:
         operand = int(inner_expression.pop(0))
         if operator == '+':
@@ -60,7 +61,7 @@ def evaluate_inner_expression(inner_expression):
                 raise ValueError("Division by zero")
     return result
 
-
+#breaking up the expression
 def tokenize(expression):
     tokens = []
     current_token = ''
